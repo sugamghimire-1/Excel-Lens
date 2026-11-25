@@ -2,7 +2,7 @@
 
 Excel-Lens is a spreadsheet that runs entirely in the browser. It has a ribbon, a formula bar, a fast canvas grid, its own formula engine, live charts, and Excel, CSV and PDF support. There is no server, no account and no API key, and it works offline after the first load.
 
-**Live app: https://sugamghimire-1.github.io/tessera-sheets/**
+**Live app: https://sugamghimire-1.github.io/Excel_Lens/**
 
 ![Sales dashboard in light mode](docs/dashboard-light.jpg)
 
