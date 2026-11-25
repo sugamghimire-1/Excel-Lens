@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Tessera is a fast, offline-first spreadsheet that runs entirely in your browser." />
+    <meta name="theme-color" content="#f3f5f9" />
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <title>Tessera</title>
+    <script>
+      // Apply the saved theme before first paint so dark mode never flashes white.
+      (function () {
+        try {
+          var t = localStorage.getItem('tessera.theme') || 'light';
+          var dark = t === 'dark' || (t === 'system' && matchMedia('(prefers-color-scheme: dark)').matches);
+          document.documentElement.classList.toggle('dark', dark);
+        } catch (e) {}
+      })();
+    </script>
+    <style>
+      .boot { position: fixed; inset: 0; display: grid; place-items: center; background: #f3f5f9; }
+      .dark .boot { background: #14171d; }
+      .boot svg { width: 44px; height: 44px; }
+      .boot rect { animation: boot 1.2s ease-in-out infinite; }
+      .boot rect:nth-child(2) { animation-delay: 0.12s; }
+      .boot rect:nth-child(3) { animation-delay: 0.24s; }
+      .boot rect:nth-child(4) { animation-delay: 0.36s; }
+      @keyframes boot { 50% { opacity: 0.25; } }
+      @media (prefers-reduced-motion: reduce) { .boot rect { animation: none; } }
+    </style>
+  </head>
+  <body>
+    <div id="root">
+      <div class="boot" role="status" aria-label="Loading Tessera">
+        <svg viewBox="0 0 32 32" fill="#2457d6">
+          <rect x="3" y="3" width="15" height="11" rx="2.5" />
+          <rect x="20.5" y="3" width="8.5" height="11" rx="2.5" fill="#12a594" />
+          <rect x="3" y="16.5" width="8.5" height="12.5" rx="2.5" fill="#e5a50a" />
+          <rect x="14" y="16.5" width="15" height="12.5" rx="2.5" />
+        </svg>
+      </div>
+    </div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

@@ -1,0 +1,137 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: light;
+    --frame: 236 240 246;
+    --chrome: 247 249 251;
+    --panel: 255 255 255;
+    --raised: 255 255 255;
+    --line: 222 227 235;
+    --line-strong: 191 200 213;
+    --ink: 27 35 51;
+    --ink-2: 74 86 106;
+    --ink-3: 101 113 132;
+    --accent: 36 87 214;
+    --accent-ink: 255 255 255;
+    --accent-soft: 226 235 252;
+    --hover: 235 239 245;
+    --pressed: 222 228 237;
+    --good: 28 124 67;
+    --warn: 160 98 0;
+    --bad: 193 45 40;
+    --shadow: 22 33 62;
+  }
+
+  .dark {
+    color-scheme: dark;
+    --frame: 16 19 25;
+    --chrome: 27 31 39;
+    --panel: 30 35 44;
+    --raised: 37 43 53;
+    --line: 45 52 64;
+    --line-strong: 73 83 101;
+    --ink: 230 235 243;
+    --ink-2: 178 188 204;
+    --ink-3: 142 153 171;
+    --accent: 108 155 255;
+    --accent-ink: 12 19 35;
+    --accent-soft: 37 52 88;
+    --hover: 43 50 62;
+    --pressed: 54 63 78;
+    --good: 96 202 132;
+    --warn: 236 182 84;
+    --bad: 255 124 114;
+    --shadow: 0 0 0;
+  }
+
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
+  body {
+    @apply bg-frame font-sans text-sm text-ink antialiased;
+    overflow: hidden;
+    overscroll-behavior: none;
+    font-feature-settings: 'ss01' 0;
+  }
+
+  button,
+  input,
+  select,
+  textarea {
+    font: inherit;
+    color: inherit;
+  }
+
+  :focus-visible {
+    outline: 2px solid rgb(var(--accent));
+    outline-offset: 1px;
+  }
+
+  ::selection {
+    background: rgb(var(--accent) / 0.24);
+  }
+
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: rgb(var(--line-strong)) transparent;
+  }
+}
+
+@layer components {
+  .control {
+    @apply h-8 w-full rounded-md border border-line-strong bg-panel px-2.5 text-sm text-ink outline-none transition-colors;
+    @apply placeholder:text-ink-3 hover:border-ink-3 focus:border-accent focus:ring-2 focus:ring-accent/20;
+  }
+
+  .control[aria-invalid='true'] {
+    @apply border-bad focus:ring-bad/20;
+  }
+
+  .kbd {
+    @apply inline-flex h-5 min-w-[20px] items-center justify-center rounded border border-line bg-chrome px-1.5 text-2xs font-medium text-ink-2;
+  }
+
+  .grid-scroller {
+    scrollbar-width: auto;
+    scrollbar-color: rgb(var(--line-strong)) rgb(var(--chrome));
+  }
+
+  .grid-scroller::-webkit-scrollbar {
+    width: 14px;
+    height: 14px;
+  }
+
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .checker {
+    background-image: conic-gradient(rgb(var(--line)) 25%, transparent 0 50%, rgb(var(--line)) 0 75%, transparent 0);
+    background-size: 8px 8px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    transition-duration: 1ms !important;
+  }
+}
+
+@media print {
+  body {
+    overflow: visible;
+  }
+}
