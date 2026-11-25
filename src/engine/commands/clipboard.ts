@@ -106,7 +106,7 @@ export function clipToHtml(clip: ClipData): string {
     });
     return `<tr>${tds.join('')}</tr>`;
   });
-  return `<meta charset="utf-8"><table data-tessera-clip="${clip.id}" style="border-collapse:collapse">${rows.join('')}</table>`;
+  return `<meta charset="utf-8"><table data-lens-clip="${clip.id}" style="border-collapse:collapse">${rows.join('')}</table>`;
 }
 
 /* --------------------------------------------------------------- importing */

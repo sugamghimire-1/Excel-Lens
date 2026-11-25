@@ -108,7 +108,7 @@ export function startAutosave(): void {
     if (useWorkbook.getState().saveState === 'unsaved' || useWorkbook.getState().saveState === 'error') e.preventDefault();
   });
   if (typeof BroadcastChannel !== 'undefined') {
-    channel = new BroadcastChannel('tessera');
+    channel = new BroadcastChannel('excel-lens');
     channel.onmessage = (e: MessageEvent<{ type: string; id: string }>) => {
       const { workbook } = useWorkbook.getState();
       if (e.data.type !== 'saved' || e.data.id !== workbook.id) return;

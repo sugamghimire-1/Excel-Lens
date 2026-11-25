@@ -8,12 +8,13 @@ import { activeSheet, primaryRange } from '@/state/selectors';
 import { useUI } from '@/state/uiStore';
 import { useWorkbook } from '@/state/workbookStore';
 import type { Workbook } from '@/types';
+import { APP_NAME, FILE_EXT, LEGACY_FILE_EXT } from '@/utils/brand';
 import { download, safeFileName } from '@/utils/cx';
 import { uid } from '@/utils/id';
 import type { PdfOptions } from './pdf';
 
 const XLSX_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
-export const ACCEPT = '.xlsx,.xlsm,.csv,.tsv,.txt,.tessera,.json';
+export const ACCEPT = `.xlsx,.xlsm,.csv,.tsv,.txt,.${FILE_EXT},.${LEGACY_FILE_EXT},.json`;
 
 function baseName(file: string): string {
   return file.replace(/\.[^.]+$/, '');
@@ -51,21 +52,21 @@ async function readWorkbook(file: File): Promise<{ workbook: Workbook; warnings:
   }
   if (ext === 'xls') throw new Error('The old .xls format is not supported. Save the file as .xlsx and try again.');
   const text = await file.text();
-  if (ext === 'tessera' || ext === 'json') {
+  if (ext === FILE_EXT || ext === LEGACY_FILE_EXT || ext === 'json') {
     let data: unknown;
     try {
       data = JSON.parse(text);
     } catch {
-      throw new Error(`${file.name} is not a Tessera workbook.`);
+      throw new Error(`${file.name} is not an ${APP_NAME} workbook.`);
     }
-    if (!isWorkbookJson(data)) throw new Error(`${file.name} is not a Tessera workbook.`);
+    if (!isWorkbookJson(data)) throw new Error(`${file.name} is not an ${APP_NAME} workbook.`);
     return { workbook: { ...deserializeWorkbook(data), id: uid('wb') }, warnings: [] };
   }
   if (['csv', 'tsv', 'txt'].includes(ext)) {
     const { sheetFromCsv } = await import('./csv');
     return { workbook: createWorkbook(name, [sheetFromCsv(text, name.replace(/[\\/?*[\]:]/g, ' ').trim().slice(0, 31) || 'Sheet1')]), warnings: [] };
   }
-  throw new Error(`${file.name} cannot be opened. Choose an .xlsx, .csv or .tessera file.`);
+  throw new Error(`${file.name} cannot be opened. Choose an .xlsx, .csv or .${FILE_EXT} file.`);
 }
 
 /** Opens a file as a new workbook. The current one stays saved in this browser. */
@@ -135,11 +136,11 @@ export async function downloadCsv(): Promise<void> {
   useUI.getState().toast('success', `Downloaded ${sheet.name} as CSV`);
 }
 
-export function downloadTessera(): void {
+export function downloadNative(): void {
   if (!settleEdit()) return;
   const { workbook } = useWorkbook.getState();
-  download(JSON.stringify(serializeWorkbook(workbook)), `${safeFileName(workbook.name)}.tessera`, 'application/json');
-  useUI.getState().toast('success', `Downloaded ${safeFileName(workbook.name)}.tessera`);
+  download(JSON.stringify(serializeWorkbook(workbook)), `${safeFileName(workbook.name)}.${FILE_EXT}`, 'application/json');
+  useUI.getState().toast('success', `Downloaded ${safeFileName(workbook.name)}.${FILE_EXT}`);
 }
 
 export async function downloadPdf(options: PdfOptions): Promise<void> {

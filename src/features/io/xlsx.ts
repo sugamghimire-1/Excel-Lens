@@ -10,6 +10,7 @@ import { mix, themeById } from '@/engine/themes';
 import { CalcEngine, tokenize } from '@/formulas';
 import { errorFromCode, dateToSerial } from '@/formulas/values';
 import { CellError, type AxisMeta, type BorderEdge, type BorderLine, type Cell, type CellStyle, type CompareOp, type ConditionalKind, type ConditionalRule, type DefinedName, type Range, type Sheet, type ValidationKind, type ValidationRule, type Workbook } from '@/types';
+import { APP_NAME } from '@/utils/brand';
 import { uid } from '@/utils/id';
 import { readCharts, writeCharts } from './xlsxCharts';
 
@@ -172,7 +173,7 @@ const scalarOut = (v: unknown): ExcelJS.CellValue => (v instanceof CellError ? (
 export async function exportXlsx(wb: Workbook, engine: CalcEngine): Promise<Uint8Array> {
   const [{ default: Excel }, { default: Zip }] = await Promise.all([import('exceljs'), import('jszip')]);
   const book = new Excel.Workbook();
-  book.creator = 'Tessera';
+  book.creator = APP_NAME;
   book.created = new Date();
   const theme = themeById(wb.themeId);
 

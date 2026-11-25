@@ -10,6 +10,7 @@ import { insertAtCaret, startEdit } from '@/state/editing';
 import { useActiveSheet } from '@/state/selectors';
 import { useUI, type ThemeMode } from '@/state/uiStore';
 import { useWorkbook } from '@/state/workbookStore';
+import { APP_NAME } from '@/utils/brand';
 import { openFileDialog } from '../io/fileActions';
 import { openSample } from '../backstage/templates';
 import { ThemeGallery } from './galleries';
@@ -298,7 +299,7 @@ export function HelpTab() {
       <BigButton label="Function reference" icon={BookOpen} onClick={() => set({ dialog: { type: 'function' } })} />
       <BigButton label="Find a command" icon={Search} keys="Alt+Q" onClick={() => set({ palette: true })} />
       <BigButton label="Open sample" icon={FileSpreadsheet} desc="Open a fresh copy of the sales dashboard." onClick={openSample} />
-      <BigButton label="About Tessera" icon={CircleHelp} onClick={() => set({ dialog: { type: 'about' } })} />
+      <BigButton label={`About ${APP_NAME}`} icon={CircleHelp} onClick={() => set({ dialog: { type: 'about' } })} />
     </Group>
   );
 }

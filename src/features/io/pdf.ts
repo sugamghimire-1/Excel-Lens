@@ -9,6 +9,7 @@ import { contentRange, extentRange } from '@/engine/sheet';
 import { themeById } from '@/engine/themes';
 import type { CalcEngine } from '@/formulas/calcEngine';
 import type { Range, Sheet, Workbook } from '@/types';
+import { APP_NAME } from '@/utils/brand';
 import { LIGHT } from '../grid/gridPalette';
 import { GridRenderer } from '../grid/renderer';
 import { computeLayout } from '../grid/viewport';
@@ -68,7 +69,7 @@ export async function exportPdf(wb: Workbook, engine: CalcEngine, active: Sheet,
   const [{ jsPDF }, { chartImage }] = await Promise.all([import('jspdf'), import('../charts/echarts')]);
   const landscape = o.orientation === 'landscape';
   const doc = new jsPDF({ unit: 'pt', format: o.paper, orientation: o.orientation, compress: true });
-  doc.setProperties({ title: wb.name, creator: 'Tessera' });
+  doc.setProperties({ title: wb.name, creator: APP_NAME });
   const [pw, ph] = landscape ? [PAPER[o.paper][1], PAPER[o.paper][0]] : PAPER[o.paper];
   const areaW = pw - MARGIN * 2;
   const areaH = ph - MARGIN * 2 - FOOTER;

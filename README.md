@@ -1,6 +1,6 @@
-# Tessera
+# Excel-Lens
 
-Tessera is a spreadsheet that runs entirely in the browser. It has a ribbon, a formula bar, a fast canvas grid, its own formula engine, live charts, and Excel, CSV and PDF support. There is no server, no account and no API key, and it works offline after the first load.
+Excel-Lens is a spreadsheet that runs entirely in the browser. It has a ribbon, a formula bar, a fast canvas grid, its own formula engine, live charts, and Excel, CSV and PDF support. There is no server, no account and no API key, and it works offline after the first load.
 
 **Live app: https://sugamghimire-1.github.io/tessera-sheets/**
 
@@ -83,7 +83,7 @@ npm run dev        # http://localhost:5173
 - Import and export `.xlsx` with formulas, formatting, merges, notes, links, validation, conditional formats, filters, names, frozen panes and charts
 - Import and export `.csv`
 - Export a selection, sheet or workbook as PDF with searchable text
-- Autosave to IndexedDB, recent files, save a copy, and `.tessera` backups
+- Autosave to IndexedDB, recent files, save a copy, and `.xlens` backups
 - Share links that carry the compressed workbook in the URL fragment, so nothing is uploaded
 
 **Accessibility**

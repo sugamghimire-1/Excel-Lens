@@ -11,9 +11,10 @@ import { openStored } from '@/state/persistence';
 import { storage, type WorkbookMeta } from '@/state/storage';
 import { useUI } from '@/state/uiStore';
 import { useWorkbook } from '@/state/workbookStore';
+import { APP_NAME, FILE_EXT } from '@/utils/brand';
 import { cx, plural, timeAgo } from '@/utils/cx';
 import { Logo } from '../appBar/Logo';
-import { ACCEPT, downloadCsv, downloadTessera, downloadXlsx, openFile, openFileDialog, saveCopy, startWorkbook } from '../io/fileActions';
+import { ACCEPT, downloadCsv, downloadNative, downloadXlsx, openFile, openFileDialog, saveCopy, startWorkbook } from '../io/fileActions';
 import { TEMPLATES, type Template } from './templates';
 
 type Page = 'home' | 'new' | 'open' | 'export' | 'info';
@@ -65,7 +66,7 @@ export function Backstage() {
         ))}
         <div className="flex-1" />
         <div className="flex items-center gap-2 px-2 pb-1 text-xs text-ink-3">
-          <Logo size={18} /> Tessera
+          <Logo size={18} /> {APP_NAME}
         </div>
       </nav>
       <main className="min-w-0 flex-1 overflow-auto">
@@ -250,7 +251,7 @@ function Recents({ title, limit }: { title: string; limit?: number }) {
           </span>
         )}
       </div>
-      {failed && <EmptyState icon={HardDrive} title="Browser storage is unavailable">Tessera cannot list saved workbooks here. You can still open and download files.</EmptyState>}
+      {failed && <EmptyState icon={HardDrive} title="Browser storage is unavailable">{APP_NAME} cannot list saved workbooks here. You can still open and download files.</EmptyState>}
       {!failed && list === null && (
         <div className="space-y-2" role="status" aria-label="Loading workbooks">
           {[0, 1, 2].map((i) => (
@@ -325,7 +326,7 @@ function OpenPanel() {
       >
         <Upload size={24} strokeWidth={1.6} className="mb-2.5 text-accent" />
         <p className="font-medium">Drop a file here</p>
-        <p className="mt-0.5 text-xs text-ink-3">Excel (.xlsx), CSV or a Tessera workbook. Files stay on this device.</p>
+        <p className="mt-0.5 text-xs text-ink-3">Excel (.xlsx), CSV or an {APP_NAME} workbook. Files stay on this device.</p>
         <Button variant="primary" className="mt-4" onClick={() => openFileDialog('workbook')}>
           Choose file
         </Button>
@@ -350,7 +351,7 @@ function ExportPage({ close }: { close: () => void }) {
       },
     },
     { label: 'CSV (.csv)', hint: 'Displayed values of the current sheet', icon: FileText, run: () => void downloadCsv() },
-    { label: 'Tessera workbook (.tessera)', hint: 'An exact copy, for backup or another device', icon: FileJson, run: downloadTessera },
+    { label: `${APP_NAME} workbook (.${FILE_EXT})`, hint: 'An exact copy, for backup or another device', icon: FileJson, run: downloadNative },
   ];
   return (
     <section>

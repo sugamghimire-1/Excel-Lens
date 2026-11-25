@@ -8,6 +8,7 @@ import { gridApi } from '@/state/gridApi';
 import { saveNow } from '@/state/persistence';
 import { useUI } from '@/state/uiStore';
 import { useWorkbook } from '@/state/workbookStore';
+import { APP_NAME } from '@/utils/brand';
 import { cx, shortcut, timeAgo } from '@/utils/cx';
 import { keepFocus } from '../ribbon/parts';
 import { Logo } from './Logo';
@@ -20,9 +21,9 @@ export function AppBar() {
   const setTheme = useUI((s) => s.setTheme);
   return (
     <header className="flex h-12 shrink-0 items-center gap-2 px-3">
-      <button type="button" aria-label="Tessera, open file menu" data-tip="File menu" onClick={() => set({ backstage: 'home' })} className="flex h-9 items-center gap-2 rounded-md px-1.5 hover:bg-pressed/60">
+      <button type="button" aria-label={`${APP_NAME}, open file menu`} data-tip="File menu" onClick={() => set({ backstage: 'home' })} className="flex h-9 items-center gap-2 rounded-md px-1.5 hover:bg-pressed/60">
         <Logo />
-        <span className="hidden text-base font-semibold tracking-[-0.01em] lg:inline">Tessera</span>
+        <span className="hidden text-base font-semibold tracking-[-0.01em] lg:inline">{APP_NAME}</span>
       </button>
       <span className="mx-1 h-5 w-px bg-line-strong/60" />
       <WorkbookName />

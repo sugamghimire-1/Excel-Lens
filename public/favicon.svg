@@ -1,1 +1,18 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect x="3" y="3" width="15" height="11" rx="2.5" fill="#2457d6"/><rect x="20.5" y="3" width="8.5" height="11" rx="2.5" fill="#12a594"/><rect x="3" y="16.5" width="8.5" height="12.5" rx="2.5" fill="#e5a50a"/><rect x="14" y="16.5" width="15" height="12.5" rx="2.5" fill="#2457d6"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <style>.r{stroke:#1d2f5c}.g{fill:#fff}@media (prefers-color-scheme:dark){.r{stroke:#e6ebf3}.g{fill:#1b1f27}}</style>
+  <mask id="m"><rect width="32" height="32" fill="#fff"/><circle cx="19.5" cy="19.5" r="10.6" fill="#000"/></mask>
+  <g mask="url(#m)">
+    <rect x="1.5" y="1.5" width="25" height="25" rx="6" fill="#2457d6"/>
+    <path d="M9.8 1.5v25M18.2 1.5v25M1.5 9.8h25M1.5 18.2h25" stroke="#fff" stroke-opacity=".5" stroke-width="1.7"/>
+  </g>
+  <clipPath id="c"><circle cx="19.5" cy="19.5" r="7"/></clipPath>
+  <circle class="g" cx="19.5" cy="19.5" r="7.6"/>
+  <g clip-path="url(#c)">
+    <path d="M12 12h6.6v6.6H12z" fill="#12a594"/>
+    <path d="M20.4 12H27v6.6h-6.6z" fill="#8fb0f5"/>
+    <path d="M12 20.4h6.6V27H12z" fill="#8fb0f5"/>
+    <path d="M20.4 20.4H27V27h-6.6z" fill="#f2a20c"/>
+  </g>
+  <circle class="r" cx="19.5" cy="19.5" r="7.9" fill="none" stroke-width="2.2"/>
+  <path class="r" d="M25.6 25.6l3.9 3.9" fill="none" stroke-width="3.6" stroke-linecap="round"/>
+</svg>

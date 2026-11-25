@@ -3,11 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Tessera is a fast, offline-first spreadsheet that runs entirely in your browser." />
+    <meta name="description" content="Excel-Lens is a fast, offline-first spreadsheet that runs entirely in your browser." />
     <meta name="theme-color" content="#f3f5f9" />
     <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
     <link rel="manifest" href="./manifest.webmanifest" />
-    <title>Tessera</title>
+    <title>Excel-Lens</title>
     <script>
       // Apply the saved theme before first paint so dark mode never flashes white.
       (function () {
@@ -22,22 +22,32 @@
       .boot { position: fixed; inset: 0; display: grid; place-items: center; background: #f3f5f9; }
       .dark .boot { background: #14171d; }
       .boot svg { width: 44px; height: 44px; }
-      .boot rect { animation: boot 1.2s ease-in-out infinite; }
-      .boot rect:nth-child(2) { animation-delay: 0.12s; }
-      .boot rect:nth-child(3) { animation-delay: 0.24s; }
-      .boot rect:nth-child(4) { animation-delay: 0.36s; }
-      @keyframes boot { 50% { opacity: 0.25; } }
-      @media (prefers-reduced-motion: reduce) { .boot rect { animation: none; } }
+      .boot .r { stroke: #1d2f5c; }
+      .boot .g { fill: #fff; }
+      .dark .boot .r { stroke: #e6ebf3; }
+      .dark .boot .g { fill: #1e232c; }
+      .boot .lens { animation: boot 1.6s ease-in-out infinite; }
+      @keyframes boot { 50% { transform: translate(-3px, -3px); } }
+      @media (prefers-reduced-motion: reduce) { .boot .lens { animation: none; } }
     </style>
   </head>
   <body>
     <div id="root">
-      <div class="boot" role="status" aria-label="Loading Tessera">
-        <svg viewBox="0 0 32 32" fill="#2457d6">
-          <rect x="3" y="3" width="15" height="11" rx="2.5" />
-          <rect x="20.5" y="3" width="8.5" height="11" rx="2.5" fill="#12a594" />
-          <rect x="3" y="16.5" width="8.5" height="12.5" rx="2.5" fill="#e5a50a" />
-          <rect x="14" y="16.5" width="15" height="12.5" rx="2.5" />
+      <div class="boot" role="status" aria-label="Loading Excel-Lens">
+        <svg viewBox="0 0 32 32" fill="none">
+          <rect x="1.5" y="1.5" width="25" height="25" rx="6" fill="#2457d6" />
+          <path d="M9.8 1.5v25M18.2 1.5v25M1.5 9.8h25M1.5 18.2h25" stroke="#fff" stroke-opacity=".5" stroke-width="1.7" />
+          <g class="lens">
+            <circle class="g" cx="19.5" cy="19.5" r="7.6" />
+            <clipPath id="lens-clip"><circle cx="19.5" cy="19.5" r="7" /></clipPath>
+            <g clip-path="url(#lens-clip)">
+              <path d="M12 12h6.6v6.6H12z" fill="#12a594" />
+              <path d="M20.4 12H27v6.6h-6.6zM12 20.4h6.6V27H12z" fill="#8fb0f5" />
+              <path d="M20.4 20.4H27V27h-6.6z" fill="#f2a20c" />
+            </g>
+            <circle class="r" cx="19.5" cy="19.5" r="7.9" stroke-width="2.2" />
+            <path class="r" d="M25.6 25.6l3.9 3.9" stroke-width="3.6" stroke-linecap="round" />
+          </g>
         </svg>
       </div>
     </div>

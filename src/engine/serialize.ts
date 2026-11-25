@@ -1,6 +1,7 @@
 /** JSON codec for workbooks, used by storage, share links and file export. */
 import { errorFromCode } from '@/formulas/values';
 import { CellError, type AxisMeta, type Cell, type CellNote, type CellScalar, type CellStyle, type DefinedName, type Sheet, type SheetProps, type Workbook } from '@/types';
+import { APP_NAME } from '@/utils/brand';
 import { createSheet, internStyle } from './sheet';
 
 export const FORMAT_VERSION = 1;
@@ -28,7 +29,8 @@ interface JsonSheet extends Partial<Omit<SheetProps, 'filterHidden'>> {
 }
 
 export interface JsonWorkbook {
-  format: 'tessera';
+  /** `tessera` marks files saved before the app was renamed. */
+  format: 'excel-lens' | 'tessera';
   version: number;
   id: string;
   name: string;
@@ -74,17 +76,17 @@ export function serializeWorkbook(wb: Workbook): JsonWorkbook {
       cols: axis(cols),
     };
   });
-  return { format: 'tessera', version: FORMAT_VERSION, id: wb.id, name: wb.name, themeId: wb.themeId, names: wb.names, styles, sheets };
+  return { format: 'excel-lens', version: FORMAT_VERSION, id: wb.id, name: wb.name, themeId: wb.themeId, names: wb.names, styles, sheets };
 }
 
 export function isWorkbookJson(data: unknown): data is JsonWorkbook {
   const d = data as Partial<JsonWorkbook> | null;
-  return typeof d === 'object' && d !== null && d.format === 'tessera' && Array.isArray(d.sheets) && d.sheets.length > 0;
+  return typeof d === 'object' && d !== null && (d.format === 'excel-lens' || d.format === 'tessera') && Array.isArray(d.sheets) && d.sheets.length > 0;
 }
 
 export function deserializeWorkbook(json: JsonWorkbook): Workbook {
-  if (!isWorkbookJson(json)) throw new Error('This file is not a Tessera workbook.');
-  if (json.version > FORMAT_VERSION) throw new Error('This workbook was saved by a newer version of Tessera.');
+  if (!isWorkbookJson(json)) throw new Error(`This file is not an ${APP_NAME} workbook.`);
+  if (json.version > FORMAT_VERSION) throw new Error(`This workbook was saved by a newer version of ${APP_NAME}.`);
   const styles = json.styles.map((s) => internStyle(s));
   const axis = (list: [number, JsonAxis][]): Map<number, AxisMeta> =>
     new Map(list.map(([i, { s, ...rest }]) => [i, s === undefined ? rest : { ...rest, style: styles[s] }]));

@@ -21,7 +21,8 @@ export interface StorageProvider {
   remove(id: string): Promise<void>;
 }
 
-const DB_NAME = 'tessera';
+/** Storage keys keep the app's first name, so workbooks saved before the rename still open. */
+const STORAGE_KEY = 'tessera';
 const DB_VERSION = 1;
 const META = 'meta';
 const DATA = 'data';
@@ -47,7 +48,7 @@ export class IndexedDbProvider implements StorageProvider {
   private open(): Promise<IDBDatabase> {
     if (!this.db) {
       this.db = new Promise((resolve, reject) => {
-        const req = indexedDB.open(DB_NAME, DB_VERSION);
+        const req = indexedDB.open(STORAGE_KEY, DB_VERSION);
         req.onupgradeneeded = () => {
           req.result.createObjectStore(META, { keyPath: 'id' });
           req.result.createObjectStore(DATA, { keyPath: 'id' });
@@ -107,14 +108,14 @@ export const storage: StorageProvider = new IndexedDbProvider();
 export const prefs = {
   get(key: string, fallback: string): string {
     try {
-      return localStorage.getItem(`tessera.${key}`) ?? fallback;
+      return localStorage.getItem(`${STORAGE_KEY}.${key}`) ?? fallback;
     } catch {
       return fallback;
     }
   },
   set(key: string, value: string): void {
     try {
-      localStorage.setItem(`tessera.${key}`, value);
+      localStorage.setItem(`${STORAGE_KEY}.${key}`, value);
     } catch {
       // Preferences are a convenience; the app works without them.
     }

@@ -85,6 +85,11 @@ describe('serialisation', () => {
     const a = deserializeWorkbook(serializeWorkbook(wb)).sheets[0].cells.get(cellKey(0, 0))?.s;
     expect(a).toBe(wb.sheets[0].cells.get(cellKey(0, 0))?.s);
   });
+  it('still opens files saved before the app was renamed', () => {
+    const json = serializeWorkbook(richWorkbook());
+    expect(json.format).toBe('excel-lens');
+    expect(deserializeWorkbook({ ...json, format: 'tessera' }).sheets).toHaveLength(2);
+  });
   it('rejects other JSON', () => {
     expect(isWorkbookJson({ sheets: [] })).toBe(false);
     expect(isWorkbookJson(null)).toBe(false);

@@ -1,6 +1,6 @@
 {
-  "name": "Tessera",
-  "short_name": "Tessera",
+  "name": "Excel-Lens",
+  "short_name": "Excel-Lens",
   "description": "A fast, offline-first spreadsheet for the browser.",
   "start_url": "./",
   "display": "standalone",

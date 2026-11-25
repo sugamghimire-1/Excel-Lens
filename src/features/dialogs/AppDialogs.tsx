@@ -9,9 +9,10 @@ import { keyCol, keyRow, MAX_COLS, MAX_ROWS } from '@/engine/address';
 import { allFunctions } from '@/formulas';
 import { useUI, type DialogState } from '@/state/uiStore';
 import { useWorkbook } from '@/state/workbookStore';
+import { APP_NAME, FILE_EXT } from '@/utils/brand';
 import { shortcut } from '@/utils/cx';
 import { Logo } from '../appBar/Logo';
-import { downloadPdf, downloadTessera, downloadXlsx } from '../io/fileActions';
+import { downloadPdf, downloadNative, downloadXlsx } from '../io/fileActions';
 import type { PdfOptions } from '../io/pdf';
 import { shareLink } from '../io/share';
 
@@ -100,8 +101,8 @@ export function ShareDialog() {
             <Button icon={<FileSpreadsheet size={15} />} onClick={() => void downloadXlsx()}>
               Download .xlsx
             </Button>
-            <Button icon={<FileJson size={15} />} onClick={downloadTessera}>
-              Download .tessera
+            <Button icon={<FileJson size={15} />} onClick={downloadNative}>
+              Download .{FILE_EXT}
             </Button>
           </div>
         </section>
@@ -269,7 +270,7 @@ export function StatsDialog() {
 
 export function AboutDialog() {
   return (
-    <Dialog title="About Tessera" onClose={close} width={420} footer={<Button onClick={close}>Close</Button>}>
+    <Dialog title={`About ${APP_NAME}`} onClose={close} width={420} footer={<Button onClick={close}>Close</Button>}>
       <div className="flex gap-4">
         <Logo size={52} />
         <div>

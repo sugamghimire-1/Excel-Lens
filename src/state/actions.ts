@@ -497,7 +497,7 @@ export function clearMarquee(): void {
 /** Pastes clipboard data; falls back to the internal clipboard. */
 export function pasteData(data: { text: string; html: string }, mode: PasteMode = 'all'): void {
   const { clip } = ui();
-  const marker = /data-tessera-clip="([^"]+)"/.exec(data.html)?.[1];
+  const marker = /data-lens-clip="([^"]+)"/.exec(data.html)?.[1];
   const target = primaryRange();
   let pasted: Range | null = null;
   const clipIsCurrent = clip !== null && (marker === clip.id || (!data.html && !data.text));

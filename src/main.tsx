@@ -15,7 +15,7 @@ createRoot(document.getElementById('root')!).render(
 if (import.meta.env.DEV) {
   // Console handle for debugging in development builds.
   void Promise.all([import('@/state/workbookStore'), import('@/state/uiStore'), import('@/state/actions'), import('@/state/selection'), import('@/state/editing'), import('@/engine/address')]).then(([doc, ui, actions, selection, editing, address]) => {
-    Object.assign(window, { tessera: { doc: doc.useWorkbook, ui: ui.useUI, actions, selection, editing, address } });
+    Object.assign(window, { excelLens: { doc: doc.useWorkbook, ui: ui.useUI, actions, selection, editing, address } });
   });
 }
 

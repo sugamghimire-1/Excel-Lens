@@ -21,6 +21,7 @@ import { gridApi } from '@/state/gridApi';
 import { restoreLast, startAutosave } from '@/state/persistence';
 import { useUI } from '@/state/uiStore';
 import { useWorkbook } from '@/state/workbookStore';
+import { APP_NAME } from '@/utils/brand';
 import { cx } from '@/utils/cx';
 
 let booted = false;
@@ -127,12 +128,12 @@ export function App() {
 
   useEffect(() => void boot(), []);
   useEffect(() => {
-    if (ready) document.title = `${name} - Tessera`;
+    if (ready) document.title = `${name} - ${APP_NAME}`;
   }, [ready, name]);
 
   if (!ready) {
     return (
-      <div className="flex h-full items-center justify-center bg-frame" role="status" aria-label="Loading Tessera">
+      <div className="flex h-full items-center justify-center bg-frame" role="status" aria-label={`Loading ${APP_NAME}`}>
         <span className="animate-pulse">
           <Logo size={44} />
         </span>

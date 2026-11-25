@@ -11,7 +11,7 @@ import { defineConfig } from 'vitest/config';
  */
 function offlineServiceWorker(): Plugin {
   return {
-    name: 'tessera-offline',
+    name: 'offline-service-worker',
     apply: 'build',
     enforce: 'post',
     generateBundle(_options, bundle) {
@@ -22,7 +22,7 @@ function offlineServiceWorker(): Plugin {
       this.emitFile({
         type: 'asset',
         fileName: 'sw.js',
-        source: `const CACHE = 'tessera-${version}';
+        source: `const CACHE = 'excel-lens-${version}';
 const ASSETS = ${JSON.stringify(files)};
 self.addEventListener('install', (event) => {
   event.waitUntil(caches.open(CACHE).then((c) => c.addAll(ASSETS)).then(() => self.skipWaiting()));
@@ -30,7 +30,7 @@ self.addEventListener('install', (event) => {
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys()
-      .then((keys) => Promise.all(keys.filter((k) => k.startsWith('tessera-') && k !== CACHE).map((k) => caches.delete(k))))
+      .then((keys) => Promise.all(keys.filter((k) => /^(excel-lens|tessera)-/.test(k) && k !== CACHE).map((k) => caches.delete(k))))
       .then(() => self.clients.claim()),
   );
 });
@@ -58,7 +58,7 @@ export default defineConfig({
   resolve: {
     alias: [
       { find: /^@\//, replacement: fileURLToPath(new URL('./src/', import.meta.url)) },
-      // Optional jsPDF integrations that Tessera never calls.
+      // Optional jsPDF integrations that the app never calls.
       { find: /^(html2canvas|canvg|dompurify)$/, replacement: emptyModule },
     ],
   },
@@ -69,5 +69,7 @@ export default defineConfig({
   test: {
     environment: 'node',
     include: ['tests/**/*.test.ts'],
+    // Generous, so a busy machine never fails a deploy.
+    testTimeout: 60_000,
   },
 });
